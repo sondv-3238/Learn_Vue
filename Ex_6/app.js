@@ -26,7 +26,10 @@ const app = Vue.createApp({
             return { width: this.playerHealth + '%'}
         },
         mayUseSpecialAttack() {
-            return this.currentRound % 3 !== 0;
+            return this.currentRound % 3 !== 0 || this.currentRound == 0;
+        },
+        mayUserHeal(){
+            return this.playerHealth == 100;
         }
     },
     watch: {
@@ -90,6 +93,7 @@ const app = Vue.createApp({
         },
         surrender() {
             this.winner = "monster";
+            this.playerHealth = 0;
         },
         addLogMessage(who, what, value) {
             this.logMessages.unshift({
