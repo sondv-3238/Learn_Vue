@@ -1,9 +1,25 @@
+<template>
+  <section>
+    <div class="head">
+
+    </div>
+    <ul>
+      <to-do-list></to-do-list>
+    </ul>
+  </section>
+</template>
+
+<script>
+
+</script>
+
+<style>
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-family: 'Jost', sans-serif;
+  font-family: "Jost", sans-serif;
 }
 
 body {
@@ -11,15 +27,19 @@ body {
 }
 
 header {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   margin: 3rem auto;
   border-radius: 10px;
   padding: 1rem;
-  background-color: #58004d;
+  background-color: #fff;
   color: white;
   text-align: center;
   width: 90%;
   max-width: 40rem;
+}
+
+#app .head {
+  background: #58004d;
+  padding: 100px;
 }
 
 #app ul {
@@ -61,3 +81,4 @@ header {
   border-color: #ec3169;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.26);
 }
+</style>
