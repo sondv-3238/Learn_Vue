@@ -1,39 +1,9 @@
-<template>
-  <section>
-    <div class="head">
-    </div>
-    <ul>
-      <header>
-        <div class="add-new">
-          <p><strong>Todo :</strong></p>
-          <input class="form-control" />
-          <button class="btn">Add</button>
-        </div>
-      </header>
-      <header>
-        <div class="list">
-          <div class="edit">
-            <h4><strong>Edit:</strong></h4>
-            <input class="form-control" />
-            <button class="btn">Save</button>
-          </div>
-          <to-do-list></to-do-list>
-        </div>
-      </header>
-    </ul>
-  </section>
-</template>
-
-<script>
-</script>
-
-<style>
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-family: "Jost", sans-serif;
+  font-family: 'Jost', sans-serif;
 }
 
 body {
@@ -41,19 +11,15 @@ body {
 }
 
 header {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   margin: 3rem auto;
   border-radius: 10px;
   padding: 1rem;
-  background-color: #fff;
+  background-color: #58004d;
   color: white;
   text-align: center;
   width: 90%;
   max-width: 40rem;
-}
-
-#app .head {
-  background: #58004d;
-  padding: 100px;
 }
 
 #app ul {
@@ -95,4 +61,3 @@ header {
   border-color: #ec3169;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.26);
 }
-</style>

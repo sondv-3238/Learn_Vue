@@ -29,6 +29,4 @@ const handler = {
     target.message = value;
   }
 };
-const proxy = Proxy(data, handler);
-proxy.message = "Hello!!!!";
-console.log(proxy.longMessage);
+
