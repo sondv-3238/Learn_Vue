@@ -4,11 +4,7 @@
     </div>
     <ul>
       <header>
-        <div class="add-new">
-          <p><strong>Todo :</strong></p>
-          <input class="form-control" />
-          <button class="btn">Add</button>
-        </div>
+        <add-list @add-list="addList"></add-list>
       </header>
       <header>
         <div class="list">
@@ -17,7 +13,8 @@
             <input class="form-control" />
             <button class="btn">Save</button>
           </div>
-          <to-do-list></to-do-list>
+          <to-do-list v-for="list in lists" :key="list.id" :id="list.id" :name="list.name" :checked="true"
+            @delete="deleteList" @edit ="editList"></to-do-list>
         </div>
       </header>
     </ul>
@@ -25,6 +22,26 @@
 </template>
 
 <script>
+export default {
+  data() {
+    return {
+      lists: [],
+    };
+  },
+  methods: {
+    addList(name) {
+      const newToDoList = {
+        id: new Date().toString(),
+        name: name,
+      }
+      this.lists.push(newToDoList);
+    },
+    deleteList(id) {
+      this.lists = this.lists.filter((list) => list.id !== id);
+    },
+
+  },
+}
 </script>
 
 <style>

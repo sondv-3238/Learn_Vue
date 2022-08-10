@@ -1,43 +1,40 @@
 <template>
   <div class="list-todo">
-    <ul>
-      <li v-for="item in items" :key="item.id" :class="{ active: item.checked }">
-        <input type="checkbox" v-model="item.checked" />
-        <p>{{ item.name }}</p>
-        <button class="btn btn-edit">Sửa</button>
-        <button class="btn btn-delete">Xóa</button>
-      </li>
-    </ul>
+      <div :class="{ active: isCheck }">
+        <input type="checkbox" v-model="isCheck" />
+        <p>{{ name }}</p>
+        <button  class="btn btn-edit">Sửa</button>
+        <button @click="this.$emit('delete', this.id)" class="btn btn-delete">Xóa</button>
+      </div>
   </div>
 </template>
 
 <script>
 export default {
+  emits:['delete-list'],
+  props:{
+    id: {
+      type: String,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    checked:{
+      type: Boolean,
+      required: false,
+    }
+  },
   data() {
     return {
-      items: [
-        {
-          id: 1,
-          name: "LoL",
-          checked: true,
-        },
-        {
-          id: 2,
-          name: "Dota 2",
-          checked: true,
-        },
-        {
-          id: 3,
-          name: "Valorant",
-          checked: false,
-        },
-        {
-          id: 4,
-          name: "CS Go",
-          checked: true,
-        },
-      ],
+      isCheck: this.checked,
     };
+  },
+  methods: {
+    deleteList(){
+      this.$emit('delete-list', this.id);
+    }
   },
 };
 </script>
