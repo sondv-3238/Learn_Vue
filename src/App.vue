@@ -1,23 +1,17 @@
 <template>
   <section>
     <header>
-      <div class="add-new">
-        <p><strong>New Todo:</strong></p>
-        <input class="form-control" />
-        <button class="btn">Add</button>
-      </div>
+      <add-todo @add-todo="addTodo"></add-todo>
       <div class="list">
-        <div class="edit">
-          <h4><strong>Edit:</strong></h4>
-          <input class="form-control" />
-          <button class="btn">Save</button>
-        </div>
         <ul>
           <to-do-list
             v-for="item in items"
             :key="item.id"
+            :id="item.id"
             :name="item.name"
             :checked="item.checked"
+            @delete="deleteTodo"
+            @update="updateTodo"
           >
           </to-do-list>
         </ul>
@@ -39,7 +33,6 @@ export default {
         {
           id: 2,
           name: "Play",
-          checked: false,
         },
         {
           id: 3,
@@ -49,15 +42,35 @@ export default {
         {
           id: 4,
           name: "Shopping",
-          checked: false,
         },
         {
           id: 5,
           name: "Running",
-          checked: false,
         },
       ],
     };
+  },
+  methods: {
+    addTodo(name) {
+      if (name.length === 0) {
+        alert("name is required");
+      } else {
+        const newTodo = {
+          id: new Date().toISOString(),
+          name: name,
+          checked: false,
+        };
+        this.items.push(newTodo);
+      }
+    },
+    deleteTodo(todoId) {
+      this.items = this.items.filter((item) => item.id !== todoId);
+    },
+    updateTodo(data) {
+      console.log(data);
+      const index = this.items.findIndex((item) => item.id == data.id);
+      this.items[index].name = data.name;
+    }
   },
 };
 </script>
@@ -158,7 +171,8 @@ header {
 
 #app h4 {
   text-align: left;
-  margin-left: 125px;
+  margin-left: 110px;
+  margin-bottom: -10px;
 }
 
 #app .add-new p {
@@ -245,10 +259,24 @@ header {
 }
 
 #app .list p {
-    text-align: left;
-    margin-left: 125px;
-    width: 60%;
-    position: absolute;
-    margin-top: -29px;
+  text-align: left;
+  margin-left: 125px;
+  width: 60%;
+  position: absolute;
+  margin-top: -29px;
+}
+
+#app input {
+  font: inherit;
+  padding: 0.15rem;
+}
+#app label {
+  font-weight: bold;
+  margin-right: 1rem;
+  width: 7rem;
+  display: inline-block;
+}
+#app form div {
+  margin: 1rem 0;
 }
 </style>
