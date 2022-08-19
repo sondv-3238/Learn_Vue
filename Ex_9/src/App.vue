@@ -8,6 +8,20 @@
       </header>
       <header>
         <div>
+          <h2>Not Done</h2>
+        </div>
+        <to-do-list :lists="lists">
+          <template #default="SlotProc">
+            <li v-if="!SlotProc.item.checked" class="fail-job">
+              <input type="checkbox" v-model="SlotProc.item.checked" onclick="checkBox(SlotProc.item.id)" />
+              <h4>{{ SlotProc.item.name }}</h4>
+            </li>
+          </template>
+        </to-do-list>
+        <div>
+          <h2>Done</h2>
+        </div>
+        <div>
           <to-do-list :lists="lists">
             <template #default="SlotProc">
               <li v-if="SlotProc.item.checked" class="job">
@@ -18,19 +32,9 @@
               </li>
             </template>
           </to-do-list>
-          <div>
-            <p>Job is Not Completed</p>
-          </div>
-          <to-do-list :lists="lists">
-            <template #default="SlotProc">
-              <li v-if="!SlotProc.item.checked" class="fail-job">
-                <input type="checkbox" v-model="SlotProc.item.checked" onclick="checkBox(SlotProc.item.id)" />
-                <h4>{{ SlotProc.item.name }}</h4>
-              </li>
-            </template>
-          </to-do-list>
-          <button style="background-color:green; color: black;" @click="setSelectedComponent('complete-list')">Complete List</button>
-          <button style="background-color:yellow; color: black;" @click="setSelectedComponent('todo-list')">Todo List</button>
+          <h2 style="margin-top: 60px;">Bai 2</h2>
+          <button class="complete-list" @click="setSelectedComponent('complete-list')">Complete List</button>
+          <button class="todo-list" @click="setSelectedComponent('todo-list')">Todo List</button>
         </div>
       </header>
     </ul>
@@ -44,22 +48,22 @@ export default {
     return {
       lists: [{
         id: 1,
-        name: 'LoL',
+        name: 'Eat',
         checked: true,
       },
       {
         id: 2,
-        name: 'CSGO',
+        name: 'Sleep',
         checked: false,
       },
       {
         id: 3,
-        name: 'Dota 2',
+        name: 'Running',
         checked: true,
       },
       {
         id: 4,
-        name: 'Valorant',
+        name: 'Swimming',
         checked: false,
       }
       ],
@@ -106,15 +110,15 @@ header {
   border-radius: 10px;
   padding: 1rem;
   background-color: #fff;
-  color: white;
+  color: rgb(99, 116, 201);
   text-align: center;
   width: 90%;
   max-width: 40rem;
 }
 
 #app .head {
-  background: #58004d;
-  padding: 100px;
+  background: #965d8e;
+  padding: 50px;
 }
 
 #app ul {
@@ -142,33 +146,33 @@ header {
 
 #app .job {
   background-color: yellow;
+  list-style: none;
 }
 
 #app h2 {
   font-size: 2rem;
   border-bottom: 4px solid #ccc;
-  color: #58004d;
+  color: #da59c8;
   margin: 0 0 1rem 0;
 }
 
-#app button {
-  font: inherit;
-  cursor: pointer;
-  border: 1px solid #ff0077;
-  background-color: #ff0077;
-  color: white;
-  padding: 0.05rem 1rem;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.26);
-}
-
-#app button:hover,
-#app button:active {
-  background-color: #ec3169;
-  border-color: #ec3169;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.26);
-}
-
 #app .fail-job {
-  background-color: green;
+  background-color: rgb(91, 207, 192);
+  list-style: none;
+}
+
+#app .complete-list {
+  background: rgb(94, 196, 214);
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+#app .todo-list {
+  background: rgb(173, 39, 190);
+  margin-left: 20px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
 }
 </style>

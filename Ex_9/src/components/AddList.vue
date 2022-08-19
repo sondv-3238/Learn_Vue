@@ -1,11 +1,9 @@
 <template>
     <form @submit.prevent="submitData">
-        <div>
+        <div classs="add-todo">
             <label for="">Name</label>
             <input type="text" v-model="enteredName">
-        </div>
-        <div>
-            <button>Add List</button>
+            <button>Add</button>
         </div>
     </form>
 </template>
@@ -27,3 +25,5 @@ export default {
     },
 }
 </script>
+<style scoped>
+</style>
