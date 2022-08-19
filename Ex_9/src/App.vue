@@ -7,17 +7,34 @@
         <add-list @add-list="addList"></add-list>
       </header>
       <header>
-        <div class="list">
-          <div class="edit">
-            <h4><strong>Edit:</strong></h4>
-            <input class="form-control" />
-            <button class="btn">Save</button>
+        <div>
+          <to-do-list :lists="lists">
+            <template #default="SlotProc">
+              <li v-if="SlotProc.item.checked" class="job">
+                <input type="checkbox" v-model="SlotProc.item.checked" onclick="checkBox(SlotProc.item.id)" />
+                <b>
+                  <h1>{{ SlotProc.item.name }}</h1>
+                </b>
+              </li>
+            </template>
+          </to-do-list>
+          <div>
+            <p>Job is Not Completed</p>
           </div>
-          <to-do-list v-for="list in lists" :key="list.id" :id="list.id" :name="list.name" :checked="true"
-            @delete="deleteList" @edit ="editList"></to-do-list>
+          <to-do-list :lists="lists">
+            <template #default="SlotProc">
+              <li v-if="!SlotProc.item.checked" class="fail-job">
+                <input type="checkbox" v-model="SlotProc.item.checked" onclick="checkBox(SlotProc.item.id)" />
+                <h4>{{ SlotProc.item.name }}</h4>
+              </li>
+            </template>
+          </to-do-list>
+          <button style="background-color:green; color: black;" @click="setSelectedComponent('complete-list')">Complete List</button>
+          <button style="background-color:yellow; color: black;" @click="setSelectedComponent('todo-list')">Todo List</button>
         </div>
       </header>
     </ul>
+     <component :is="selectedComponent" :lists="lists"></component>
   </section>
 </template>
 
@@ -25,7 +42,28 @@
 export default {
   data() {
     return {
-      lists: [],
+      lists: [{
+        id: 1,
+        name: 'LoL',
+        checked: true,
+      },
+      {
+        id: 2,
+        name: 'CSGO',
+        checked: false,
+      },
+      {
+        id: 3,
+        name: 'Dota 2',
+        checked: true,
+      },
+      {
+        id: 4,
+        name: 'Valorant',
+        checked: false,
+      }
+      ],
+      selectedComponent: 'complete-list',
     };
   },
   methods: {
@@ -39,7 +77,13 @@ export default {
     deleteList(id) {
       this.lists = this.lists.filter((list) => list.id !== id);
     },
-
+    selectedCheckBox(id) {
+      const idLists = this.lists.find((list) => list.id === id);
+      idLists.checked = !idLists.checked;
+    },
+    setSelectedComponent(cmp) {
+      this.selectedComponent = cmp;
+    }
   },
 }
 </script>
@@ -89,6 +133,17 @@ header {
   max-width: 40rem;
 }
 
+#app h4 {
+  display: flex;
+  justify-content: center;
+  color: black;
+}
+
+
+#app .job {
+  background-color: yellow;
+}
+
 #app h2 {
   font-size: 2rem;
   border-bottom: 4px solid #ccc;
@@ -111,5 +166,9 @@ header {
   background-color: #ec3169;
   border-color: #ec3169;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.26);
+}
+
+#app .fail-job {
+  background-color: green;
 }
 </style>

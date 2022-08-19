@@ -1,39 +1,26 @@
 <template>
-  <div class="list-todo">
-      <div :class="{ active: isCheck }">
-        <input type="checkbox" v-model="isCheck" />
-        <p>{{ name }}</p>
-        <button  class="btn btn-edit">Sửa</button>
-        <button @click="this.$emit('delete', this.id)" class="btn btn-delete">Xóa</button>
+  <div>
+    <ul>
+      <div v-for="list in lists" :key="list">
+        <slot :item="list">
+
+        </slot>
       </div>
+    </ul>
   </div>
 </template>
 
 <script>
 export default {
-  emits:['delete-list'],
-  props:{
-    id: {
-      type: String,
-      required: true
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    checked:{
-      type: Boolean,
-      required: false,
-    }
-  },
+  emits: ['click-checkbox'],
+  props: ['lists'],
   data() {
     return {
-      isCheck: this.checked,
     };
   },
   methods: {
-    deleteList(){
-      this.$emit('delete-list', this.id);
+    checkBox(){
+      this.$emit('click-checkbox', this.id);
     }
   },
 };
@@ -75,11 +62,6 @@ body {
   border: 1px solid #fff;
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-}
-
-#app h4 {
-  text-align: left;
-  margin-left: 125px;
 }
 
 #app .add-new p {
