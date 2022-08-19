@@ -1,6 +1,7 @@
 <template>
   <section>
     <div class="head">
+      <h1>TO DO LIST</h1>
     </div>
     <ul>
       <header>
@@ -8,33 +9,53 @@
       </header>
       <header>
         <div>
+          <h3>Unfinished</h3>
           <to-do-list :lists="lists">
-            <template #default="SlotProc">
-              <li v-if="SlotProc.item.checked" class="job">
-                <input type="checkbox" v-model="SlotProc.item.checked" onclick="checkBox(SlotProc.item.id)" />
+            <template #default="Slot">
+              <li v-if="!Slot.item.checked" class="unfinished">
+                <input
+                  type="checkbox"
+                  v-model="Slot.item.checked"
+                  onclick="checkBox(Slot.item.id)"
+                />
+                <h4>{{ Slot.item.name }}</h4>
+              </li>
+            </template>
+          </to-do-list>
+        </div>
+        <div>
+          <h3>Completed</h3>
+          <to-do-list :lists="lists">
+            <template #default="Slot">
+              <li v-if="Slot.item.checked" class="complete">
+                <input
+                  type="checkbox"
+                  v-model="Slot.item.checked"
+                  onclick="checkBox(Slot.item.id)"
+                />
                 <b>
-                  <h1>{{ SlotProc.item.name }}</h1>
+                  <h1>{{ Slot.item.name }}</h1>
                 </b>
               </li>
             </template>
           </to-do-list>
-          <div>
-            <p>Job is Not Completed</p>
-          </div>
-          <to-do-list :lists="lists">
-            <template #default="SlotProc">
-              <li v-if="!SlotProc.item.checked" class="fail-job">
-                <input type="checkbox" v-model="SlotProc.item.checked" onclick="checkBox(SlotProc.item.id)" />
-                <h4>{{ SlotProc.item.name }}</h4>
-              </li>
-            </template>
-          </to-do-list>
-          <button style="background-color:green; color: black;" @click="setSelectedComponent('complete-list')">Complete List</button>
-          <button style="background-color:yellow; color: black;" @click="setSelectedComponent('todo-list')">Todo List</button>
+          <div style="margin-top: 60px"></div>
+          <button
+            class="complete-list"
+            @click="setSelectedComponent('complete-list')"
+          >
+            Completed List
+          </button>
+          <button
+            class="todo-list"
+            @click="setSelectedComponent('unfinished-list')"
+          >
+            To do List
+          </button>
         </div>
       </header>
     </ul>
-     <component :is="selectedComponent" :lists="lists"></component>
+    <component :is="selectedComponent" :lists="lists"></component>
   </section>
 </template>
 
@@ -42,28 +63,35 @@
 export default {
   data() {
     return {
-      lists: [{
-        id: 1,
-        name: 'LoL',
-        checked: true,
-      },
-      {
-        id: 2,
-        name: 'CSGO',
-        checked: false,
-      },
-      {
-        id: 3,
-        name: 'Dota 2',
-        checked: true,
-      },
-      {
-        id: 4,
-        name: 'Valorant',
-        checked: false,
-      }
+      lists: [
+        {
+          id: 1,
+          name: "Eat",
+          checked: true,
+        },
+        {
+          id: 2,
+          name: "Sleep",
+          checked: false,
+        },
+        {
+          id: 3,
+          name: "Running",
+          checked: true,
+        },
+        {
+          id: 4,
+          name: "Swimming",
+          checked: false,
+        },
+        {
+          id: 5,
+          name: "Work",
+          checked: false,
+        }
       ],
-      selectedComponent: 'complete-list',
+      selectedComponent: "complete-list",
+      isEdit: false,
     };
   },
   methods: {
@@ -71,7 +99,7 @@ export default {
       const newToDoList = {
         id: new Date().toString(),
         name: name,
-      }
+      };
       this.lists.push(newToDoList);
     },
     deleteList(id) {
@@ -83,9 +111,9 @@ export default {
     },
     setSelectedComponent(cmp) {
       this.selectedComponent = cmp;
-    }
+    },
   },
-}
+};
 </script>
 
 <style>
@@ -106,15 +134,15 @@ header {
   border-radius: 10px;
   padding: 1rem;
   background-color: #fff;
-  color: white;
+  color: rgb(99, 116, 201);
   text-align: center;
   width: 90%;
   max-width: 40rem;
 }
 
 #app .head {
-  background: #58004d;
-  padding: 100px;
+  background: #965d8e;
+  padding: 50px;
 }
 
 #app ul {
@@ -139,36 +167,60 @@ header {
   color: black;
 }
 
-
-#app .job {
+#app .complete {
   background-color: yellow;
+  list-style: none;
+}
+
+#app .complete input {
+  float: left;
+}
+
+#app .complete h1 {
+  position: relative;
+  margin-top: 5px;
+  color: #fc2600;
 }
 
 #app h2 {
   font-size: 2rem;
   border-bottom: 4px solid #ccc;
-  color: #58004d;
+  color: #da59c8;
   margin: 0 0 1rem 0;
 }
 
-#app button {
-  font: inherit;
-  cursor: pointer;
-  border: 1px solid #ff0077;
-  background-color: #ff0077;
-  color: white;
-  padding: 0.05rem 1rem;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.26);
+#app .unfinished {
+  background-color: rgb(91, 207, 192);
+  list-style: none;
 }
 
-#app button:hover,
-#app button:active {
-  background-color: #ec3169;
-  border-color: #ec3169;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.26);
+#app .unfinished input {
+  float: left;
 }
 
-#app .fail-job {
-  background-color: green;
+#app .unfinished h4 {
+  position: relative;
+  margin-top: 5px;
+}
+
+#app .complete-list {
+  background: rgb(94, 196, 214);
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+#app .todo-list {
+  background: rgb(173, 39, 190);
+  margin-left: 20px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+#app .head h1 {
+  text-align: center;
+  color: aquamarine;
+  font-size: 40px;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-for="list in lists" :key="list">
-            <li v-if="list.checked" class="job">
+            <li v-if="list.checked" class="complete">
                 <b>
                     <h1>{{ list.name }}</h1>
                 </b>
@@ -18,3 +18,6 @@ export default {
     },
 };
 </script>
+<style scoped>
+
+</style>
